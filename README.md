@@ -23,8 +23,8 @@ y sus propios préstamos).
 ## Estructura del repositorio
 
 ```
-biblioteca-grupo1/
-├── biblioteca.cpp   # Código fuente del sistema
+PROYECTO-DE-ALGORITMOS-GRUPO1-C/
+├──PROYECTO_ALGORITMOS.cpp   # Código fuente del sistema
 ├── README.md        # Este archivo
 └── docs/            # Diagramas de la Entrega 01 y Entrega 02
 ```
@@ -32,7 +32,7 @@ biblioteca-grupo1/
 ## Cómo compilar
 
 ```bash
-g++ -std=c++17 -Wall -Wextra biblioteca.cpp -o biblioteca
+g++ -std=c++17 -Wall -Wextra PROYECTO_ALGORITMOS.cpp  -o biblioteca
 ```
 
 ## Cómo ejecutar
