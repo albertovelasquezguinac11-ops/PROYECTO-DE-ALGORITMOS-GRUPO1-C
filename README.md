@@ -15,7 +15,7 @@ y sus propios préstamos).
 | Integrante | Carné | Módulo | Rama |
 |---|---|---|---|
 | Jesser Josué Betancourth Chinchilla | 6590-19-8654 | Módulo Principal / Autenticación | `feature/modulo-principal` |
-| Pablo Morales Chajon| 6590-26-21537 | Módulo de Catálogo | `feature/modulo-catalogo` |
+| Pablo José Eduardo Morales Hernández| 6590-26-21537 | Módulo de Catálogo | `feature/modulo-catalogo` |
 | Alberto Velásquez Güinac | 6590-26-26581 | Módulo de Usuarios | `feature/modulo-usuarios` |
 | Marco Antonio Garrido Chacón | 6590-26-23445 | Préstamos y Devoluciones | `feature/modulo-prestamos` |
 | Aracely Adriana Rosales Bautista | 6590-26-26474 | Reportes y Estadísticas | `feature/modulo-reportes` |
