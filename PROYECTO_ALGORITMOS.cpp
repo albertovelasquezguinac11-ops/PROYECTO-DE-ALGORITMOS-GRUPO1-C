@@ -1,6 +1,9 @@
 #include <iostream>
 #include <string>
 #include <limits>
+#include <fstream>
+#include <sstream>
+
 
 using namespace std;
 
@@ -35,6 +38,12 @@ struct Prestamo {
 };
 Prestamo prestamos[MAX_PRESTAMOS];
 int totalPrestamos = 0;
+
+const string ARCHIVO_PRESTAMOS = "prestamos.txt";
+ 
+void guardarPrestamosArchivo();
+void cargarPrestamosArchivo();
+
 
 int leerEntero(const string &mensaje) {
     int valor;
@@ -299,6 +308,7 @@ bool realizarPrestamo(int codigoLibro, int codigoUsuario) {
     prestamos[totalPrestamos].codigoUsuario = codigoUsuario;
     prestamos[totalPrestamos].activo = true;
     totalPrestamos++;
+    guardarPrestamosArchivo();   // <-- linea nueva
     return true;
 }
 
@@ -312,6 +322,7 @@ bool registrarDevolucion(int codigoLibro, int codigoUsuario) {
             if (pos != -1) {
                 catalogo[pos].disponible = true;
             }
+            guardarPrestamosArchivo();   // <-- linea nueva
             return true;
         }
     }
@@ -335,6 +346,59 @@ int consultarPrestamosVigentes() {
     }
     return vigentes;
 }
+
+void guardarPrestamosArchivo() {
+    ofstream archivo(ARCHIVO_PRESTAMOS);
+    if (!archivo.is_open()) {
+        cout << "  -> No se pudo guardar el archivo de prestamos.\n";
+        return;
+    }
+    for (int i = 0; i < totalPrestamos; i++) {
+        archivo << prestamos[i].codigoLibro << ";"
+                << prestamos[i].codigoUsuario << ";"
+                << (prestamos[i].activo ? 1 : 0) << "\n";
+    }
+    archivo.close();
+}
+
+void cargarPrestamosArchivo() {
+    ifstream archivo(ARCHIVO_PRESTAMOS);
+    if (!archivo.is_open()) {
+        return;
+    }
+ 
+    string linea;
+    totalPrestamos = 0;
+ 
+    while (getline(archivo, linea) && totalPrestamos < MAX_PRESTAMOS) {
+        if (linea.empty()) {
+            continue;
+        }
+        stringstream ss(linea);
+        string campo;
+        int codigoLibro, codigoUsuario, activoInt;
+ 
+        getline(ss, campo, ';'); codigoLibro = stoi(campo);
+        getline(ss, campo, ';'); codigoUsuario = stoi(campo);
+        getline(ss, campo, ';'); activoInt = stoi(campo);
+ 
+        prestamos[totalPrestamos].codigoLibro = codigoLibro;
+        prestamos[totalPrestamos].codigoUsuario = codigoUsuario;
+        prestamos[totalPrestamos].activo = (activoInt == 1);
+        totalPrestamos++;
+ 
+        if (activoInt == 1) {
+            int posLibro = buscarLibroPorCodigo(codigoLibro);
+            if (posLibro != -1) {
+                catalogo[posLibro].disponible = false;
+            }
+        }
+    }
+    archivo.close();
+    cout << "  -> Prestamos recuperados del archivo: " << totalPrestamos << "\n";
+}
+
+
 
 void menuPrestamos() {
     int opcion;
@@ -383,6 +447,17 @@ int listarLibrosDisponibles() {
     }
     return cantidad;
 }
+
+void cargarDatosIniciales() {
+    cout << "Cargando datos del sistema...\n";
+    cargarPrestamosArchivo();   // <-- linea nueva
+}
+
+void guardarDatosFinales() {
+    cout << "Guardando datos del sistema...\n";
+    guardarPrestamosArchivo();   // <-- linea nueva
+}
+
 
 int listarLibrosPrestados() {
     int cantidad = 0;
@@ -438,14 +513,6 @@ void menuReportes() {
             cout << "  -> Opcion no valida.\n";
         }
     } while (opcion != 0);
-}
-
-void cargarDatosIniciales() {
-    cout << "Cargando datos del sistema...\n";
-}
-
-void guardarDatosFinales() {
-    cout << "Guardando datos del sistema...\n";
 }
 
 void mostrarMenuPrincipal() {
