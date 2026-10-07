@@ -231,6 +231,20 @@ void consultarUsuario(int codigo) {
     cout << "  Usuario: " << usuarios[pos].usuario << "\n";
     cout << "  Rol: " << usuarios[pos].rol << "\n";
 }
+int listarUsuariosPorRol(const string &rol) {
+    int cantidad = 0;
+    for (int i = 0; i < totalUsuarios; i++) {
+        if (usuarios[i].rol == rol) {
+            cout << "  [" << usuarios[i].codigo << "] " << usuarios[i].nombre
+                 << " (" << usuarios[i].usuario << ")\n";
+            cantidad++;
+        }
+    }
+    if (cantidad == 0) {
+        cout << "  -> No hay usuarios con ese rol.\n";
+    }
+    return cantidad;
+}
 
 void menuUsuarios() {
     int opcion;
@@ -238,6 +252,7 @@ void menuUsuarios() {
         cout << "\n--- MODULO DE USUARIOS ---\n";
         cout << "1. Registrar usuario\n";
         cout << "2. Consultar usuario\n";
+        cout << "3. Listar usuarios por rol\n";
         cout << "0. Volver al menu principal\n";
         opcion = leerEntero("Opcion: ");
 
@@ -268,9 +283,12 @@ void menuUsuarios() {
                 cout << "  -> Usuario registrado correctamente.\n";
             }
         } else if (opcion == 2) {
-            int codigo = leerEntero("Codigo del usuario a consultar: ");
-            consultarUsuario(codigo);
-        } else if (opcion != 0) {
+           int codigo = leerEntero("Codigo del usuario a consultar: ");
+             consultarUsuario(codigo);
+            } else if (opcion == 3) {
+             string rol = leerTexto("Filtrar por rol (admin / usuario): ");
+                 listarUsuariosPorRol(rol);
+                } else if (opcion != 0) {
             cout << "  -> Opcion no valida.\n";
         }
     } while (opcion != 0);
@@ -651,7 +669,7 @@ int main() {
             mostrarMenuUsuario(indiceUsuario);
         }
 
-        cout << "\nSesión cerrada.\n";
+        cout << "\nSesion cerrada.\n";
         cout << "1. Iniciar sesion nuevamente\n";
         cout << "0. Salir\n";
 
