@@ -15,16 +15,16 @@ y sus propios préstamos).
 | Integrante | Carné | Módulo | Rama |
 |---|---|---|---|
 | Jesser Josué Betancourth Chinchilla | 6590-19-8654 | Módulo Principal / Autenticación | `feature/modulo-principal` |
-| Pablo Morales | 6590-26-21537 | Módulo de Catálogo | `feature/modulo-catalogo` |
+| Pablo José Eduardo Morales Hernández| 6590-26-21537 | Módulo de Catálogo | `feature/modulo-catalogo` |
 | Alberto Velásquez Güinac | 6590-26-26581 | Módulo de Usuarios | `feature/modulo-usuarios` |
-| Marco Antonio Garrido Chacón | — | Préstamos y Devoluciones | `feature/modulo-prestamos` |
-| Aracely Adriana Rosales Bautista | — | Reportes y Estadísticas | `feature/modulo-reportes` |
+| Marco Antonio Garrido Chacón | 6590-26-23445 | Préstamos y Devoluciones | `feature/modulo-prestamos` |
+| Aracely Adriana Rosales Bautista | 6590-26-26474 | Reportes y Estadísticas | `feature/modulo-reportes` |
 
 ## Estructura del repositorio
 
 ```
-biblioteca-grupo1/
-├── biblioteca.cpp   # Código fuente del sistema
+PROYECTO-DE-ALGORITMOS-GRUPO1-C/
+├──PROYECTO_ALGORITMOS.cpp   # Código fuente del sistema
 ├── README.md        # Este archivo
 └── docs/            # Diagramas de la Entrega 01 y Entrega 02
 ```
@@ -32,7 +32,7 @@ biblioteca-grupo1/
 ## Cómo compilar
 
 ```bash
-g++ -std=c++17 -Wall -Wextra biblioteca.cpp -o biblioteca
+g++ -std=c++17 -Wall -Wextra PROYECTO_ALGORITMOS.cpp  -o biblioteca
 ```
 
 ## Cómo ejecutar
