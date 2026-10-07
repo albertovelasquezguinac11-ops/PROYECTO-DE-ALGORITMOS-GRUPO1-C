@@ -451,6 +451,18 @@ void menuPrestamos() {
 int calcularTotalLibros() {
     return totalLibros;
 }
+double calcularPorcentajeDisponibilidad() {
+    if (totalLibros == 0) {
+        return 0.0;
+    }
+    int disponibles = 0;
+    for (int i = 0; i < totalLibros; i++) {
+        if (catalogo[i].disponible) {
+            disponibles++;
+        }
+    }
+    return (disponibles * 100.0) / totalLibros;
+}
 
 int listarLibrosDisponibles() {
     int cantidad = 0;
@@ -515,6 +527,7 @@ void menuReportes() {
         cout << "2. Listar libros disponibles\n";
         cout << "3. Listar libros prestados\n";
         cout << "4. Prestamos por usuario\n";
+cout << "5. Porcentaje de disponibilidad del catalogo\n";
         cout << "0. Volver al menu principal\n";
         opcion = leerEntero("Opcion: ");
 
@@ -527,6 +540,8 @@ void menuReportes() {
         } else if (opcion == 4) {
             int codigoUsuario = leerEntero("Codigo del usuario: ");
             reportarPrestamosPorUsuario(codigoUsuario);
+        } else if (opcion == 5) {
+            cout << "  -> Porcentaje de disponibilidad: " << calcularPorcentajeDisponibilidad() << "%\n";
         } else if (opcion != 0) {
             cout << "  -> Opcion no valida.\n";
         }
@@ -655,7 +670,7 @@ int main() {
     cargarDatosIniciales();
     cargarUsuarioAdministrador();
 
-    while (true) {
+    while (true) {  
         int indiceUsuario = iniciarSesion();
 
         if (indiceUsuario == -1) {
@@ -670,7 +685,11 @@ int main() {
         }
 
         cout << "\nSesion cerrada.\n";
+<<<<<<< HEAD
+            cout << "1. Iniciar sesion nuevamente\n";
+=======
         cout << "1. Iniciar sesion nuevamente\n";
+>>>>>>> c0ecc697e6ad59302ba210c80b4bd1bb2a9508f5
         cout << "0. Salir\n";
 
         int opcion = leerEntero("Seleccione una opcion: ");
