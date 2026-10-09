@@ -1,0 +1,12 @@
+# Binarios compilados
+*.exe
+*.o
+
+# Respaldos y carpetas del editor
+.history/
+output/
+.vscode/
+.claude/
+
+# Datos generados al ejecutar
+prestamos.txt
