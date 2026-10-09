@@ -11,6 +11,8 @@ bool registrarLibro(int codigo, const std::string &titulo, const std::string &au
 bool modificarLibro(int codigo, const std::string &nuevoTitulo, const std::string &nuevoAutor);
 void consultarLibro(int codigo);
 int buscarLibrosPorTitulo(const std::string &criterio);
+int listarCatalogo();
+int contarLibrosDisponibles();
 void menuCatalogo();
 
 #endif
