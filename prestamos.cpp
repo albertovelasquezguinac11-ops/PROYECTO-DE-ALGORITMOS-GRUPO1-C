@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 #include "comun.h"
 #include "catalogo.h"
 #include "usuarios.h"
@@ -13,6 +14,28 @@
 using namespace std;
 
 const string ARCHIVO_PRESTAMOS = "prestamos.txt";
+
+// Convierte un campo de texto a entero de forma segura.
+// Devuelve true solo si el campo contiene un numero valido y completo.
+// Parametros: campo (entrada), resultado (salida por referencia)
+static bool aEntero(const string &campo, int &resultado) {
+    if (campo.empty()) {
+        return false;
+    }
+    try {
+        size_t consumidos = 0;
+        int valor = stoi(campo, &consumidos);
+        if (consumidos != campo.size()) {
+            return false;   // habia caracteres sobrantes: 12abc
+        }
+        resultado = valor;
+        return true;
+    } catch (const invalid_argument &) {
+        return false;       // el campo no era un numero
+    } catch (const out_of_range &) {
+        return false;       // el numero no cabe en un int
+    }
+}
 
 bool validarDisponibilidad(int codigoLibro) {
     int pos = buscarLibroPorCodigo(codigoLibro);
@@ -106,6 +129,7 @@ void cargarPrestamosArchivo() {
     }
 
     string linea;
+    int descartadas = 0;
     totalPrestamos = 0;
 
     while (getline(archivo, linea) && totalPrestamos < MAX_PRESTAMOS) {
@@ -113,12 +137,24 @@ void cargarPrestamosArchivo() {
             continue;
         }
         stringstream ss(linea);
-        string campo;
+        string campoLibro, campoUsuario, campoActivo;
         int codigoLibro, codigoUsuario, activoInt;
 
-        getline(ss, campo, ';'); codigoLibro = stoi(campo);
-        getline(ss, campo, ';'); codigoUsuario = stoi(campo);
-        getline(ss, campo, ';'); activoInt = stoi(campo);
+        // Si falta algun campo, la linea esta mal formada y se descarta.
+        if (!getline(ss, campoLibro, ';') ||
+            !getline(ss, campoUsuario, ';') ||
+            !getline(ss, campoActivo, ';')) {
+            descartadas++;
+            continue;
+        }
+
+        // Si algun campo no es un numero valido, la linea se descarta.
+        if (!aEntero(campoLibro, codigoLibro) ||
+            !aEntero(campoUsuario, codigoUsuario) ||
+            !aEntero(campoActivo, activoInt)) {
+            descartadas++;
+            continue;
+        }
 
         prestamos[totalPrestamos].codigoLibro = codigoLibro;
         prestamos[totalPrestamos].codigoUsuario = codigoUsuario;
@@ -134,6 +170,9 @@ void cargarPrestamosArchivo() {
     }
     archivo.close();
     cout << "  -> Prestamos recuperados del archivo: " << totalPrestamos << "\n";
+    if (descartadas > 0) {
+        cout << "  -> Lineas descartadas por formato invalido: " << descartadas << "\n";
+    }
 }
 
 void menuPrestamos() {
