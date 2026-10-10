@@ -140,6 +140,7 @@ int main() {
 
         if (indiceUsuario == -1) {
             cout << "El sistema se cerrara.\n";
+            guardarDatosFinales();
             return 0;
         }
 
