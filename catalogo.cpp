@@ -167,8 +167,9 @@ void menuCatalogo() {
         } else if (opcion == 5) {
             int total = listarCatalogo();
             if (total > 0) {
-                cout << "  Total: " << total << " libros, "
-                     << contarLibrosDisponibles() << " disponibles.\n";
+                int disponibles = contarLibrosDisponibles();
+                cout << "  Total: " << total << (total == 1 ? " libro, " : " libros, ")
+                     << disponibles << (disponibles == 1 ? " disponible.\n" : " disponibles.\n");
             }
         } else if (opcion != 0) {
             cout << "  -> Opcion no valida.\n";
