@@ -22,18 +22,9 @@ void guardarDatosFinales() {
     guardarPrestamosArchivo();
 }
 
-void mostrarMenuPrincipal() {
-    cout << "\n========================================\n";
-    cout << " SISTEMA DE GESTION DE BIBLIOTECA\n";
-    cout << "========================================\n";
-    cout << "1. Modulo de Catalogo\n";
-    cout << "2. Modulo de Usuarios\n";
-    cout << "3. Modulo de Prestamos y Devoluciones\n";
-    cout << "4. Modulo de Reportes y Estadisticas\n";
-    cout << "5. Salir\n";
-    cout << "========================================\n";
-}
-
+// Cuenta de administrador de PRUEBA que se crea al iniciar el sistema.
+// Sirve para poder entrar la primera vez y registrar el resto de usuarios.
+// En una version real la contrasena no deberia estar escrita en el codigo.
 void cargarUsuarioAdministrador() {
     registrarUsuario(1, "Administrador", "ADMIN",
                      "admin", "admin123", "admin");
