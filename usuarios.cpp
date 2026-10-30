@@ -107,6 +107,11 @@ bool registrarUsuario(int codigo, const string &nombre, const string &carne,
     usuarios[totalUsuarios].contrasena = contrasena;
     usuarios[totalUsuarios].rol = rol;
     totalUsuarios++;
+    // Se guarda de inmediato, igual que registrarLibro() con el catalogo.
+    // Si el sistema se cerrara de forma abrupta, un usuario recien creado se
+    // perderia pero sus prestamos si quedarian guardados, dejando prestamos
+    // que apuntan a un usuario inexistente.
+    guardarUsuariosArchivo();
     return true;
 }
 
