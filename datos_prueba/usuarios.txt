@@ -1,0 +1,3 @@
+1;Administrador;ADMIN;admin;admin123;admin
+2;Ana Perez;6590-26-0001;ana;1234;usuario
+3;Luis Gomez;6590-26-0002;luis;abcd;usuario

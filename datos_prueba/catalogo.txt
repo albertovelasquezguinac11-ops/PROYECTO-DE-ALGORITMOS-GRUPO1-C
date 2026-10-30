@@ -1,0 +1,5 @@
+101;Cien anos de soledad;Gabriel Garcia Marquez
+102;El Principito;Antoine de Saint-Exupery
+103;Don Quijote de la Mancha;Miguel de Cervantes
+104;Rayuela;Julio Cortazar
+105;Pedro Paramo;Juan Rulfo

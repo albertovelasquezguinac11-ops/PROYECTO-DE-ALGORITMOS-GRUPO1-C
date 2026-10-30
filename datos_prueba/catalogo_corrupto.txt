@@ -1,0 +1,4 @@
+abc;Linea mala;X
+101;Duplicado;Y
+7;SinAutor
+108;Libro valido;Autor Valido

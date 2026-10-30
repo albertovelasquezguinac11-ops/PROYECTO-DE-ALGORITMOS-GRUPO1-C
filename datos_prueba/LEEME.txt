@@ -1,0 +1,5 @@
+Datos de prueba. Para usarlos, copie catalogo.txt, usuarios.txt y prestamos.txt
+junto al ejecutable y abra el programa (entre con admin / admin123).
+Resultado esperado al abrir: 5 libros, 3 usuarios, 2 prestamos (1 activo: libro 101 queda "Prestado").
+catalogo_corrupto.txt: renombrelo a catalogo.txt para probar el archivo danado
+(espera 2 libros recuperados y 2 lineas descartadas).
