@@ -12,20 +12,33 @@
 
 using namespace std;
 
+// El ORDEN de carga importa: primero el catalogo y los usuarios, y al final
+// los prestamos. cargarPrestamosArchivo() marca como no disponibles los libros
+// prestados buscandolos en el catalogo, de modo que si el catalogo todavia
+// estuviera vacio los prestamos quedarian sin libro asociado.
 void cargarDatosIniciales() {
     cout << "Cargando datos del sistema...\n";
+    cargarCatalogoArchivo();
+    cargarUsuariosArchivo();
     cargarPrestamosArchivo();
 }
 
 void guardarDatosFinales() {
     cout << "Guardando datos del sistema...\n";
+    guardarCatalogoArchivo();
+    guardarUsuariosArchivo();
     guardarPrestamosArchivo();
 }
 
 // Cuenta de administrador de PRUEBA que se crea al iniciar el sistema.
 // Sirve para poder entrar la primera vez y registrar el resto de usuarios.
 // En una version real la contrasena no deberia estar escrita en el codigo.
+// Solo se crea si no existe: al persistir los usuarios, en la segunda
+// ejecucion el administrador ya viene del archivo y no debe duplicarse.
 void cargarUsuarioAdministrador() {
+    if (buscarUsuarioPorCodigo(1) != -1) {
+        return;
+    }
     registrarUsuario(1, "Administrador", "ADMIN",
                      "admin", "admin123", "admin");
 }
