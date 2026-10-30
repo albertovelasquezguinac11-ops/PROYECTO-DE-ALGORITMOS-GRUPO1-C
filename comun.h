@@ -44,6 +44,10 @@ extern Prestamo prestamos[MAX_PRESTAMOS];
 extern int totalPrestamos;
 
 // Utilidades de entrada con validacion
+// Definida en main.cpp. Se declara aqui para poder guardar los datos si la
+// entrada se agota de forma inesperada.
+void guardarDatosFinales();
+
 int leerEntero(const std::string &mensaje);
 std::string leerTexto(const std::string &mensaje);
 
