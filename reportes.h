@@ -8,7 +8,10 @@ int calcularTotalLibros();
 int listarLibrosDisponibles();
 int listarLibrosPrestados();
 int reportarPrestamosPorUsuario(int codigoUsuario);
+int contarDisponiblesRec(int indice);
 double calcularPorcentajeDisponibilidad();
+int contarPrestamosActivos();
+void mostrarResumenPrestamos();
 void menuReportes();
 
 #endif

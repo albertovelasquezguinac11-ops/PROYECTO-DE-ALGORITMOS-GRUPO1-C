@@ -10,11 +10,11 @@
 using namespace std;
 
 int calcularTotalLibros() {
-    return totalLibros;
+        return totalLibros;
 }
 
 int listarLibrosDisponibles() {
-    int cantidad = 0;
+        int cantidad = 0;
     for (int i = 0; i < totalLibros; i++) {
         if (catalogo[i].disponible) {
             cout << "  [" << catalogo[i].codigo << "] " << catalogo[i].titulo << "\n";
@@ -28,7 +28,7 @@ int listarLibrosDisponibles() {
 }
 
 int listarLibrosPrestados() {
-    int cantidad = 0;
+        int cantidad = 0;
     for (int i = 0; i < totalLibros; i++) {
         if (!catalogo[i].disponible) {
             cout << "  [" << catalogo[i].codigo << "] " << catalogo[i].titulo << "\n";
@@ -42,12 +42,12 @@ int listarLibrosPrestados() {
 }
 
 int reportarPrestamosPorUsuario(int codigoUsuario) {
-    int cantidad = 0;
+        int cantidad = 0;
     for (int i = 0; i < totalPrestamos; i++) {
         if (prestamos[i].codigoUsuario == codigoUsuario) {
             int posLibro = buscarLibroPorCodigo(prestamos[i].codigoLibro);
             cout << "  Libro: " << (posLibro != -1 ? catalogo[posLibro].titulo : "?")
-                 << " | Estado: " << (prestamos[i].activo ? "Activo" : "Devuelto") << "\n";
+                                 << " | Estado: " << (prestamos[i].activo ? "Activo" : "Devuelto") << "\n";
             cantidad++;
         }
     }
@@ -57,25 +57,58 @@ int reportarPrestamosPorUsuario(int codigoUsuario) {
     return cantidad;
 }
 
+// contarDisponiblesRec(indice) -> FUNCION RECURSIVA.
+// Cuenta los libros disponibles desde la posicion "indice" hasta el final.
+// Caso base: indice >= totalLibros (ya no quedan libros) -> devuelve 0.
+// Caso recursivo: suma 1 si el libro actual esta disponible y se llama a si
+// misma con indice + 1 (avanza hacia el caso base).
+int contarDisponiblesRec(int indice) {
+        if (indice >= totalLibros) {
+        return 0;
+        }
+    int actual = catalogo[indice].disponible ? 1 : 0;
+    return actual + contarDisponiblesRec(indice + 1);
+}
+
 // calcularPorcentajeDisponibilidad() -> procesa el catalogo y calcula
 // que porcentaje de libros esta disponible actualmente
 // Parametros de entrada: ninguno
 // Retorno: double con el porcentaje (0 a 100)
 double calcularPorcentajeDisponibilidad() {
-    if (totalLibros == 0) {
+        if (totalLibros == 0) {
         return 0.0;
-    }
-    int disponibles = 0;
-    for (int i = 0; i < totalLibros; i++) {
-        if (catalogo[i].disponible) {
-            disponibles++;
         }
-    }
+    int disponibles = contarDisponiblesRec(0);
     return (disponibles * 100.0) / totalLibros;
 }
 
+// contarPrestamosActivos() -> recorre el arreglo de prestamos y cuenta
+// cuantos siguen activos (libros que todavia no se han devuelto)
+// Parametros de entrada: ninguno
+// Retorno: cantidad de prestamos activos
+int contarPrestamosActivos() {
+        int activos = 0;
+    for (int i = 0; i < totalPrestamos; i++) {
+        if (prestamos[i].activo) {
+            activos++;
+        }
+    }
+    return activos;
+}
+
+// mostrarResumenPrestamos() -> procesa el arreglo de prestamos y muestra
+// el total historico, los activos y los devueltos
+// Parametros de entrada: ninguno
+// Retorno: ninguno (procedimiento)
+void mostrarResumenPrestamos() {
+        int activos = contarPrestamosActivos();
+    cout << "  Total de prestamos registrados: " << totalPrestamos << "\n";
+    cout << "  Prestamos activos: " << activos << "\n";
+    cout << "  Prestamos devueltos: " << (totalPrestamos - activos) << "\n";
+}
+
 void menuReportes() {
-    int opcion;
+        int opcion;
     do {
         cout << "\n--- MODULO DE REPORTES Y ESTADISTICAS ---\n";
         cout << "1. Total de libros en el catalogo\n";
@@ -83,6 +116,7 @@ void menuReportes() {
         cout << "3. Listar libros prestados\n";
         cout << "4. Prestamos por usuario\n";
         cout << "5. Porcentaje de disponibilidad del catalogo\n";
+        cout << "6. Resumen de prestamos (total, activos y devueltos)\n";
         cout << "0. Volver al menu principal\n";
         opcion = leerEntero("Opcion: ");
 
@@ -97,6 +131,8 @@ void menuReportes() {
             reportarPrestamosPorUsuario(codigoUsuario);
         } else if (opcion == 5) {
             cout << "  -> Disponibilidad: " << calcularPorcentajeDisponibilidad() << "%\n";
+        } else if (opcion == 6) {
+            mostrarResumenPrestamos();
         } else if (opcion != 0) {
             cout << "  -> Opcion no valida.\n";
         }
