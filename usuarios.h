@@ -13,6 +13,8 @@ bool registrarUsuario(int codigo, const std::string &nombre, const std::string &
                       const std::string &rol);
 void consultarUsuario(int codigo);
 int listarUsuariosPorRol(const std::string &rol);
+void guardarUsuariosArchivo();
+void cargarUsuariosArchivo();
 void menuUsuarios();
 
 #endif
