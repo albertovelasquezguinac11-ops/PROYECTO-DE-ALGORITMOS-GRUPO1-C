@@ -1,12 +1,19 @@
 # Binarios compilados
 *.exe
 *.o
+biblioteca
 
 # Respaldos y carpetas del editor
 .history/
 output/
 .vscode/
-.claude/
 
-# Datos generados al ejecutar
-prestamos.txt
+# Datos generados al ejecutar (en la raiz; los de ejemplo viven en datos_prueba/)
+/prestamos.txt
+/usuarios.txt
+/catalogo.txt
+pruebas.cpp
+
+# Documentos de entrega (van en Canvas, no en el repo)
+*.docx
+*.pdf
