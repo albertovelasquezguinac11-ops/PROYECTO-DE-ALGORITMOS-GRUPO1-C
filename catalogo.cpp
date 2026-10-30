@@ -119,18 +119,30 @@ void cargarCatalogoArchivo() {
 
     string linea;
     int recuperados = 0;
+    int descartadas = 0;
 
     while (getline(archivo, linea) && totalLibros < MAX_LIBROS) {
+        // Si el archivo se edito en Windows, la linea termina en '\r' y ese
+        // caracter quedaria pegado al autor al mostrarlo en pantalla.
+        if (!linea.empty() && linea[linea.size() - 1] == '\r') {
+            linea.erase(linea.size() - 1);
+        }
+        if (linea.empty()) {
+            continue;
+        }
+
         stringstream flujo(linea);
         string codigoTexto, titulo, autor, extra;
 
         if (!getline(flujo, codigoTexto, ';') ||
             !getline(flujo, titulo, ';') ||
             !getline(flujo, autor, ';')) {
+            descartadas++;
             continue;
         }
 
         if (getline(flujo, extra)) {
+            descartadas++;
             continue;
         }
 
@@ -142,10 +154,12 @@ void cargarCatalogoArchivo() {
                 codigo <= 0 ||
                 estaVacio(titulo) ||
                 estaVacio(autor)) {
+                descartadas++;
                 continue;
             }
 
             if (buscarLibroPorCodigo(codigo) != -1) {
+                descartadas++;
                 continue;
             }
 
@@ -158,6 +172,7 @@ void cargarCatalogoArchivo() {
             recuperados++;
 
         } catch (...) {
+            descartadas++;
             continue;
         }
     }
@@ -165,6 +180,9 @@ void cargarCatalogoArchivo() {
     archivo.close();
 
     cout << "Libros recuperados: " << recuperados << "\n";
+    if (descartadas > 0) {
+        cout << "Lineas descartadas por formato invalido: " << descartadas << "\n";
+    }
 }
 
 // ---------- Registro y modificacion ----------
